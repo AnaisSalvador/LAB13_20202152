@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <title>Trabajadores</title>
+</head>
+
+<body>
+<div class="container">
+  <header>
+    <img src="logo_bicentro.jpeg" class="img-fluid" alt="bicentro" width="50%">
+    <h1>Bicentro GTICS</h1>
+  </header>
+  <a type="button" class="btn btn-outline-danger" href="index.html">Regresar</a></li>
+  <br>
+  <br>
+  <h1>LISTA DE TRABAJADORES</h1>
+  <div class="container mt-4" id="detalleTrabajadores">
+    <table class="table" id="tablaTrabajadores">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Ver Detalles</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td><a type="button" class="btn btn-outline-success" href="detalleTrabajadores.html">Regresar</a></li>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const dni = urlParams.get('dni');
+  $.ajax({
+    url: 'http://localhost:8000/api/trabajadores/' + dni,
+    method: 'GET',
+    dataType: 'json'
+  })
+    .done(function (trabajadores){
+      console.log(trabajadores);
+      var tableHTML = '<table class="table">';
+      tableHTML += '<tr><th>#</th><th>Nombre</th><th>Correo</th><th>VerDetalles</th></tr>';
+      tableHTML += '<tr>';
+      tableHTML += '<td>' + trabajadores.id + '</td>';
+      tableHTML += '<td>' + trabajadores.nombres + '</td>';
+      tableHTML += '<td>' + trabajadores.apellidos + '</td>';
+      tableHTML += '<td>' + trabajadores.correo + '</td>';
+      tableHTML += '</tr>';
+      tableHTML += '</table>';
+      $('#detalleTrabajadores').html(tableHTML);
+    })
+    .fail(function (err){
+      console.log(err);
+    });
+</script>
+
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+
